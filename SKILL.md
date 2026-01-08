@@ -15,6 +15,8 @@ All Quasar documentation is in `references/`. Use grep patterns to find relevant
 
 | Topic | Location | Grep Pattern |
 |-------|----------|--------------|
+| **Commands** | `commands/` | `refactor` |
+| **Agents** | `agents/` | `component-scanner` |
 | Components | `references/vue-components/` | `QBtn\|QInput\|QTable\|QCard` |
 | Directives | `references/vue-directives/` | `v-ripple\|v-close-popup\|v-touch` |
 | Composables | `references/vue-composables/` | `useQuasar\|useMeta\|useDialog` |
@@ -97,6 +99,51 @@ export default boot(({ app }) => {
 3. **Configuration**: Read `references/quasar-cli-vite/quasar-config-file.md`
 4. **Build mode setup**: Read intro file in respective `developing-{mode}/` folder
 5. **Styling/theming**: Read `references/style/` files
+
+## Available Agents
+
+### Component Scanner
+
+Scans Vue/Quasar components for code quality improvements. The agent performs four checks:
+
+1. **CSS Utility Classes** - Finds custom CSS that could use Quasar utility classes
+2. **Linting & TypeScript** - Runs ESLint and type checking
+3. **Component Structure** - Checks size metrics and suggests splitting
+4. **Translation Check** - Finds hardcoded strings needing i18n
+
+**Usage examples:**
+- "Scan my UserProfile.vue component"
+- "Check if I can use Quasar utility classes instead of custom CSS"
+- "Is this component too large? Should I split it?"
+- "Find untranslated strings in my components"
+
+**Configuration flags:**
+- `--i18n=vue-i18n|quasar|both` - Translation pattern to check
+- `--skip-lint` - Skip ESLint/TypeScript check
+- `--skip-css` - Skip CSS utility check
+- `--skip-structure` - Skip structure analysis
+- `--skip-translation` - Skip translation check
+
+**Reference:** See `references/quasar-utility-classes.md` for complete CSS-to-class mappings.
+
+## Slash Commands
+
+### /refactor [path]
+
+Scans Vue/Quasar components and offers to fix issues found.
+
+**Usage:**
+- `/refactor` - Scan current file or prompt for path
+- `/refactor src/components/UserProfile.vue` - Scan specific file
+- `/refactor src/components/` - Scan all components in directory
+
+**What it checks:**
+1. CSS that could use Quasar utility classes
+2. ESLint and TypeScript errors
+3. Component size and structure
+4. Hardcoded strings needing translation
+
+**Behavior:** After scanning, you'll be asked if you want to fix the issues found.
 
 ## Key Files in Quasar Projects
 
